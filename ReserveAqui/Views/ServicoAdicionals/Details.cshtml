@@ -1,0 +1,27 @@
+﻿@model ReserveAqui.Models.ServicoAdicional
+
+@{
+    ViewBag.Title = Model?.Nome ?? "Detalhes do Serviço";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>Serviço Adicional</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Nome)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Nome)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Descricao)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Descricao)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Valor)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Valor)</dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-primary" }) |
+    @Html.ActionLink("Voltar à Lista", "Index", null, new { @class = "btn btn-link" })
+</p>

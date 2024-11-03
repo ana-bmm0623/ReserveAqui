@@ -1,0 +1,105 @@
+﻿@model ReserveAqui.Models.Reserva
+
+@{
+    ViewBag.Title = "Registrar Reserva";
+}
+
+<h2>Registrar Reserva</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Detalhes da Reserva</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuartoId, "Quarto", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("QuartoId", null, "Selecione o quarto", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.QuartoId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HospedeId, "Hóspede", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("HospedeId", null, "Selecione o hóspede", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.HospedeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApplicationUserId, "Usuário", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ApplicationUserId", null, "Selecione o usuário", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ApplicationUserId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuantidadePessoas, "Número de Pessoas", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.QuantidadePessoas, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 2" } })
+                @Html.ValidationMessageFor(model => model.QuantidadePessoas, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataEntrada, "Data de Entrada", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DataEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "dd/mm/aaaa" } })
+                @Html.ValidationMessageFor(model => model.DataEntrada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataSaida, "Data de Saída", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DataSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "dd/mm/aaaa" } })
+                @Html.ValidationMessageFor(model => model.DataSaida, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @* Checkboxes para CheckIn, CheckOut e Cancelamento *@
+        <div class="form-group">
+            @Html.LabelFor(model => model.CheckInRealizado, "Check-In Realizado", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-check">
+                    @Html.EditorFor(model => model.CheckInRealizado)
+                    @Html.ValidationMessageFor(model => model.CheckInRealizado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CheckOutRealizado, "Check-Out Realizado", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-check">
+                    @Html.EditorFor(model => model.CheckOutRealizado)
+                    @Html.ValidationMessageFor(model => model.CheckOutRealizado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cancelada, "Reserva Cancelada", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-check">
+                    @Html.EditorFor(model => model.Cancelada)
+                    @Html.ValidationMessageFor(model => model.Cancelada, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group text-right">
+            <input type="submit" value="Registrar Reserva" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar à Lista", "Index", null, new { @class = "btn btn-link" })
+</div>

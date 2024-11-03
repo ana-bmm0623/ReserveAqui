@@ -1,0 +1,32 @@
+﻿@model ReserveAqui.Models.AddPhoneNumberViewModel
+@{
+    ViewBag.Title = "Adicionar Telefone";
+}
+
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title</h2>
+
+    @using (Html.BeginForm("AddPhoneNumber", "Manage", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Insira seu número de telefone para que possamos entrar em contato, se necessário</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Number, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Number, new { @class = "form-control", placeholder = "Seu número de telefone" })
+                @Html.ValidationMessageFor(m => m.Number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-md-2 col-md-10">
+                <input type="submit" class="btn btn-outline-primary" value="Adicionar Telefone" />
+            </div>
+        </div>
+    }
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

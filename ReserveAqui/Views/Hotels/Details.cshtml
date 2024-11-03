@@ -1,0 +1,30 @@
+﻿@model ReserveAqui.Models.Hotel
+
+@{
+    ViewBag.Title = "Detalhes do Hotel";
+}
+
+<h2>@Model.Nome</h2>
+
+<div>
+    <h4>Informações do Hotel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Endereço</dt>
+        <dd>@Model.Endereço</dd>
+
+        <dt>Email de Contato</dt>
+        <dd>@Model.Email</dd>
+
+        <dt>Telefone</dt>
+        <dd>@Model.Telefone</dd>
+
+        <dt>Descrição</dt>
+        <dd>@Model.Descricao</dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Voltar para Lista", "Index", null, new { @class = "btn btn-default" })
+</p>

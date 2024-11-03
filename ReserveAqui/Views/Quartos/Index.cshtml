@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ReserveAqui.Models.Quarto>
+
+@{
+    ViewBag.Title = "Lista de Quartos";
+}
+
+<h2>Lista de Quartos</h2>
+
+<p>
+    @Html.ActionLink("Registrar Novo Quarto", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Hotel.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.NumeroIdentificacao)</th>
+            <th>@Html.DisplayNameFor(model => model.CapacidadeMaxima)</th>
+            <th>@Html.DisplayNameFor(model => model.Disponibilidade)</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Hotel.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.NumeroIdentificacao)</td>
+                <td>@Html.DisplayFor(modelItem => item.CapacidadeMaxima)</td>
+                <td>@Html.DisplayFor(modelItem => item.Disponibilidade)</td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" }) |
+                    @Html.ActionLink("Detalhes", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" }) |
+                    @Html.ActionLink("Excluir", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,30 @@
+﻿@model ReserveAqui.Models.ExternalLoginListViewModel
+
+<h4>Use uma conta externa para fazer o logon.</h4>
+<hr />
+
+@if (Model.Providers != null && Model.Providers.Any())
+{
+    using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="btn-group" role="group">
+            @foreach (var provider in Model.Providers)
+            {
+                <button type="submit" class="btn btn-outline-primary" name="provider" value="@provider.AuthenticationType" title="Login com @provider.Caption">
+                    <i class="fa fa-@provider.AuthenticationType.ToLower()"></i> @provider.Caption
+                </button>
+            }
+        </div>
+    }
+}
+else
+{
+    <div class="alert alert-warning">
+        <p>
+            Não há serviços de autenticação externa configurados. Consulte
+            <a href="https://go.microsoft.com/fwlink/?LinkId=403804" target="_blank">este artigo</a>
+            para obter informações sobre configuração de autenticação externa.
+        </p>
+    </div>
+}

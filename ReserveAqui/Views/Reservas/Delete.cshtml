@@ -1,0 +1,97 @@
+﻿@model ReserveAqui.Models.Reserva
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Hospede.NomeCompleto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hospede.NomeCompleto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quarto.NumeroIdentificacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quarto.NumeroIdentificacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.NomeCompleto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.NomeCompleto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantidadePessoas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantidadePessoas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataEntrada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataEntrada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataSaida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataSaida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckInRealizado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckInRealizado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckOutRealizado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckOutRealizado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cancelada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cancelada)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,39 @@
+﻿@model ReserveAqui.Models.Hotel
+
+@{
+    ViewBag.Title = "Excluir Hotel";
+}
+
+<h2>Excluir Hotel</h2>
+
+<div class="alert alert-warning" role="alert">
+    <strong>Aviso!</strong> Tem certeza de que deseja excluir este hotel?
+</div>
+
+<div>
+    <h4>Detalhes do Hotel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.Nome)</dt>
+        <dd>@Html.DisplayFor(model => model.Nome)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Endereço)</dt>
+        <dd>@Html.DisplayFor(model => model.Endereço)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+        <dd>@Html.DisplayFor(model => model.Email)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Telefone)</dt>
+        <dd>@Html.DisplayFor(model => model.Telefone)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Descricao)</dt>
+        <dd>@Html.DisplayFor(model => model.Descricao)</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
+    }
+</div>

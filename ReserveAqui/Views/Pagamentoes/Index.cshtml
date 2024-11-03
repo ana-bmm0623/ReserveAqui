@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ReserveAqui.Models.Pagamento>
+
+@{
+    ViewBag.Title = "Pagamentos";
+}
+
+<h2>Lista de Pagamentos</h2>
+
+<p>
+    @Html.ActionLink("Registrar Novo Pagamento", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Reserva.UsuarioId)</th>
+        <th>@Html.DisplayNameFor(model => model.ValorTotal)</th>
+        <th>@Html.DisplayNameFor(model => model.DataPagamento)</th>
+        <th>@Html.DisplayNameFor(model => model.MetodoPagamento)</th>
+        <th>Ações</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Reserva.UsuarioId)</td>
+            <td>@Html.DisplayFor(modelItem => item.ValorTotal)</td>
+            <td>@Html.DisplayFor(modelItem => item.DataPagamento)</td>
+            <td>@Html.DisplayFor(modelItem => item.MetodoPagamento)</td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-primary" }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info" }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+            </td>
+        </tr>
+    }
+</table>

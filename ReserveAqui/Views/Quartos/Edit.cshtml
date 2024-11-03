@@ -1,0 +1,51 @@
+﻿[HttpPost]
+[ValidateAntiForgeryToken]
+public ActionResult Create(Quarto quarto, HttpPostedFileBase ImagemUrl)
+{
+    if (ModelState.IsValid)
+    {
+        // Lógica para salvar a imagem (se existir)
+        if (ImagemUrl != null && ImagemUrl.ContentLength > 0)
+        {
+            var fileName = $"{quarto.Id}_{ImagemUrl.FileName}";
+            var path = Path.Combine(Server.MapPath("~/Images/Quartos"), fileName);
+            ImagemUrl.SaveAs(path);
+            quarto.ImagemUrl = $"/Images/Quartos/{fileName}";
+        }
+
+        db.Quartos.Add(quarto);
+        db.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
+    ViewBag.HotelId = new SelectList(db.Hoteis, "Id", "Nome", quarto.HotelId);
+    return View(quarto);
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+public ActionResult Edit(Quarto quarto, HttpPostedFileBase ImagemUrl)
+{
+    if (ModelState.IsValid)
+    {
+        if (ImagemUrl != null && ImagemUrl.ContentLength > 0)
+        {
+            var fileName = $"{quarto.Id}_{ImagemUrl.FileName}";
+            var path = Path.Combine(Server.MapPath("~/Images/Quartos"), fileName);
+            ImagemUrl.SaveAs(path);
+            quarto.ImagemUrl = $"/Images/Quartos/{fileName}";
+        }
+        else
+        {
+            var existingQuarto = db.Quartos.AsNoTracking().FirstOrDefault(q => q.Id == quarto.Id);
+            quarto.ImagemUrl = existingQuarto?.ImagemUrl;
+        }
+
+        db.Entry(quarto).State = EntityState.Modified;
+        db.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
+    ViewBag.HotelId = new SelectList(db.Hoteis, "Id", "Nome", quarto.HotelId);
+    return View(quarto);
+}

@@ -1,0 +1,90 @@
+﻿@model ReserveAqui.Models.Reserva
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Hospede.NomeCompleto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hospede.NomeCompleto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quarto.NumeroIdentificacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quarto.NumeroIdentificacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.NomeCompleto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUsero.NomeCompleto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantidadePessoas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantidadePessoas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataEntrada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataEntrada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataSaida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataSaida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckInRealizado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckInRealizado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckOutRealizado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckOutRealizado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cancelada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cancelada)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
