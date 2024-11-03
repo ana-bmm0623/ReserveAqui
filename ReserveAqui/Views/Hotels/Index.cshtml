@@ -2,53 +2,80 @@
 
 @{
     ViewBag.Title = "Lista de Hotéis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
-<h2>Hotéis Disponíveis</h2>
+<h2>Lista de Hotéis</h2>
 
-<div class="container">
-    <div class="row">
-        @foreach (var hotel in Model)
+<p>
+    @Html.ActionLink("Registrar Novo Hotel", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Imagem</th>
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.Endereço)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.Telefone)</th>
+            <th>@Html.DisplayNameFor(model => model.Descricao)</th>
+            <th>Quartos Disponíveis</th>
+            <th>Preço Mínimo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
         {
-            <div class="col-md-6 mb-4">
-                <div class="card border-0 shadow-sm">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <!-- Carrega a imagem com base no ID do hotel -->
-                            <img src="@hotel.ImagemUrl" class="card-img" alt="Imagem do Hotel">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">@hotel.Nome</h5>
-                                <p class="card-text text-muted">@hotel.Endereço</p>
-                                <p class="card-text">@hotel.Descricao</p>
-
-                                @if (hotel.Quartos.Any(q => q.Disponibilidade))
-                                {
-                                    var quartosDisponiveis = hotel.Quartos.Count(q => q.Disponibilidade);
-                                    var precoMinimo = hotel.Quartos.Where(q => q.Disponibilidade).Min(q => q.Preco);
-
-                                    <div>
-                                        <span class="badge badge-danger">Temos @quartosDisponiveis disponível(eis) a este preço</span>
-                                        <h5 class="text-danger mt-2">
-                                            R$ @precoMinimo:#,##0.00
-                                        </h5>
-                                        <small class="text-muted">inclui impostos e taxas</small>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="text-muted">Indisponível no momento</div>
-                                }
-
-                                <div>
-                                    @Html.ActionLink("Veja mais", "Details", new { id = hotel.Id }, new { @class = "btn btn-primary" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            foreach (var hotel in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@hotel.ImagemUrl" alt="Imagem do Hotel" style="width: 100px; height: auto;">
+                    </td>
+                    <td>@hotel.Nome</td>
+                    <td>@hotel.Endereço</td>
+                    <td>@hotel.Email</td>
+                    <td>@hotel.Telefone</td>
+                    <td>@hotel.Descricao</td>
+                    <td>
+                        @if (hotel.Quartos != null && hotel.Quartos.Any(q => q.Disponibilidade))
+                        {
+                            <span class="badge badge-success">
+                                @hotel.Quartos.Count(q => q.Disponibilidade) disponível(eis)
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-secondary">Indisponível</span>
+                        }
+                    </td>
+                    <td>
+                        @if (hotel.Quartos != null && hotel.Quartos.Any(q => q.Disponibilidade))
+                        {
+                            var precoMinimo = hotel.Quartos.Where(q => q.Disponibilidade).Min(q => q.Preco);
+                            @:R$ @precoMinimo.ToString("N2")
+                        }
+                        else
+                        {
+                            <span class="text-muted">N/A</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = hotel.Id }, new { @class = "btn btn-outline-primary btn-sm" }) |
+                        @Html.ActionLink("Detalhes", "Details", new { id = hotel.Id }, new { @class = "btn btn-outline-info btn-sm" }) |
+                        @Html.ActionLink("Excluir", "Delete", new { id = hotel.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                    </td>
+                </tr>
+            }
         }
-    </div>
-</div>
+        else
+        {
+            <tr>
+                <td colspan="9" class="text-center">Nenhum hotel disponível no momento.</td>
+            </tr>
+        }
+    </tbody>
+</table>

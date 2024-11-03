@@ -14,9 +14,15 @@ namespace ReserveAqui.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            ViewBag.Message = "Bem-vindo ao ReserveAqui!";
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("AdminDashboard", "Admin");
+            }
+
+            // Se não for admin, redireciona para a página inicial padrão
             return View();
         }
+
 
         // Ação privada - apenas usuários autenticados podem acessar
         [Authorize]

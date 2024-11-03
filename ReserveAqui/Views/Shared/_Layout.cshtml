@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - ReserveAqui Hotel</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     @Styles.Render("~/Content/css")
 </head>
 <body>
@@ -32,9 +31,9 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="@Url.Action("ManageHotels", "Admin")">Gerenciar Hotéis</a>
                             <a class="dropdown-item" href="@Url.Action("ManageRooms", "Admin")">Gerenciar Quartos</a>
+                            <a class="dropdown-item" href="@Url.Action("ManageGuests", "Admin")">Gerenciar Hóspedes</a>
                             <a class="dropdown-item" href="@Url.Action("ManageServices", "Admin")">Gerenciar Serviços Adicionais</a>
                             <a class="dropdown-item" href="@Url.Action("ManageReservations", "Admin")">Gerenciar Reservas</a>
-                            <a class="dropdown-item" href="@Url.Action("ManagePayments", "Admin")">Gerenciar Pagamentos</a>
                         </div>
                     </div>
                 }

@@ -1,6 +1,6 @@
 ﻿using ReserveAqui.Models;
+using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -15,9 +15,12 @@ namespace ReserveAqui.Controllers
 
         public ActionResult Index()
         {
-            // Lógica para obter e retornar a lista de hotéis
-            return View();
+            var hotels = _db.Hoteis.Include(h => h.Quartos).ToList() ?? new List<Hotel>();
+            return View(hotels);
         }
+
+
+
 
         public ActionResult Details(int? id)
         {
@@ -45,15 +48,23 @@ namespace ReserveAqui.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!imagemUrl.ContentType.StartsWith("image"))
+                // Verifica se o arquivo foi carregado
+                if (imagemUrl != null)
                 {
-                    ModelState.AddModelError("", "O arquivo deve ser uma imagem.");
-                    return View(hotel);
-                }
-                if (imagemUrl.ContentLength > 5 * 1024 * 1024) // Limite de 5MB
-                {
-                    ModelState.AddModelError("", "A imagem não pode exceder 5MB.");
-                    return View(hotel);
+                    if (!imagemUrl.ContentType.StartsWith("image"))
+                    {
+                        ModelState.AddModelError("", "O arquivo deve ser uma imagem.");
+                        return View(hotel);
+                    }
+
+                    if (imagemUrl.ContentLength > 5 * 1024 * 1024) // Limite de 5MB
+                    {
+                        ModelState.AddModelError("", "A imagem não pode exceder 5MB.");
+                        return View(hotel);
+                    }
+
+                    // Adicionar o processamento do arquivo de imagem, como salvá-lo no servidor
+                    // e definir o caminho no modelo hotel.ImagemUrl, caso necessário.
                 }
 
                 _db.Hoteis.Add(hotel);
@@ -63,6 +74,7 @@ namespace ReserveAqui.Controllers
 
             return View(hotel);
         }
+
 
         protected override void Dispose(bool disposing)
         {
