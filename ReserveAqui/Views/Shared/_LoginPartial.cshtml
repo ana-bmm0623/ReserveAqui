@@ -95,16 +95,14 @@
 
             @if (User.IsInRole("Admin"))
             {
-                <li><a href="@Url.Action("Create", "Hotels")">Adicionar Hotel</a></li>
-                <li><a href="@Url.Action("Create", "Quartos")">Adicionar Quarto</a></li>
-                <li><a href="@Url.Action("Create", "ServicosAdicionais")">Adicionar Serviço</a></li>
+                <li>@Html.ActionLink("Painel Administrativo", "AdminDashboard", "Admin")</li>
             }
         </ul>
 
         <div>
             @if (User.Identity.IsAuthenticated)
             {
-                <a href="@Url.Action("Create", "Reservations")" class="btn btn-primary">Reservar Agora</a>
+                <a href="@Url.Action("Create", "Reservas")" class="btn btn-primary">Reservar Agora</a>
             }
             else
             {

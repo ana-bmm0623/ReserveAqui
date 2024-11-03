@@ -27,36 +27,36 @@ namespace ReserveAqui
                     var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-                    // Verifica se o papel Admin existe, caso contrário cria-o
+                    // Verifica e cria o papel "Admin" se não existir
                     if (!await roleManager.RoleExistsAsync("Admin"))
                     {
                         await roleManager.CreateAsync(new IdentityRole("Admin"));
                     }
 
-                    // Verifica se o papel Hospede existe, caso contrário cria-o
+                    // Verifica e cria o papel "Hospede" se não existir
                     if (!await roleManager.RoleExistsAsync("Hospede"))
                     {
                         await roleManager.CreateAsync(new IdentityRole("Hospede"));
                     }
 
-                    // Cria um usuário admin, caso não exista
+                    // Verifica se o usuário admin já existe
                     var adminUser = await userManager.FindByEmailAsync("admin@reservaqui.com");
                     if (adminUser == null)
                     {
-                        adminUser = new ApplicationUser { UserName = "Administrador", Email = "admin@reservaqui.com" };
+                        adminUser = new ApplicationUser
+                        {
+                            UserName = "admin@reservaqui.com",
+                            Email = "admin@reservaqui.com",
+                            NomeCompleto = "Administrador",
+                            CPF = "12345678901", // Insira um CPF fictício
+                            Telefone = "123456789",
+                            DataNascimento = new DateTime(1980, 1, 1)
+                        };
                         var result = await userManager.CreateAsync(adminUser, "Admin@123");
 
                         if (result.Succeeded)
                         {
                             await userManager.AddToRoleAsync(adminUser.Id, "Admin");
-                        }
-                        else
-                        {
-                            // Exibe erros de criação do usuário
-                            foreach (var error in result.Errors)
-                            {
-                                Console.WriteLine($"Erro ao criar usuário admin: {error}");
-                            }
                         }
                     }
 
@@ -79,6 +79,5 @@ namespace ReserveAqui
                 Console.WriteLine($"Erro geral: {ex.Message}");
             }
         }
-
     }
 }

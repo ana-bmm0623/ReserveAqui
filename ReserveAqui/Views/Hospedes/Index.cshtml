@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ReserveAqui.Models.ReserveAqui.Models.Hospede>
+﻿@model IEnumerable<ReserveAqui.Models.Hospede>
 
 @{
     ViewBag.Title = "Lista de Hóspedes";
@@ -26,12 +26,12 @@
 </p>
 
 <!-- Filtro de busca -->
-<form method="get" action="@Url.Action("Index")" class="form-inline">
+<form method="get" action="@Url.Action("Index")" class="form-inline mb-3">
     <div class="form-group">
-        <label for="search">Buscar Hóspede:</label>
+        <label for="search" class="mr-2">Buscar Hóspede:</label>
         <input type="text" name="search" class="form-control" placeholder="Nome ou CPF" />
     </div>
-    <button type="submit" class="btn btn-default">Buscar</button>
+    <button type="submit" class="btn btn-outline-primary ml-2">Buscar</button>
 </form>
 
 <!-- Tabela de hóspedes -->

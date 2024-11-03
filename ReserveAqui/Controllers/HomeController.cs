@@ -14,6 +14,7 @@ namespace ReserveAqui.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            ViewBag.Message = "Bem-vindo ao ReserveAqui!";
             return View();
         }
 
@@ -21,6 +22,14 @@ namespace ReserveAqui.Controllers
         [Authorize]
         public ActionResult Dashboard()
         {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Admin()
+        {
+            string apiUri = Url.HttpRouteUrl("DefaultApi", new { controller = "admin" });
+            ViewBag.ApiUrl = new Uri(Request.Url, apiUri).AbsoluteUri.ToString();
             return View();
         }
     }

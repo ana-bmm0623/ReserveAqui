@@ -54,21 +54,17 @@ namespace ReserveAqui.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            var externalLogins = HttpContext.GetOwinContext().Authentication.GetExternalAuthenticationTypes()
-                .Select(auth => new AuthenticationDescription
-                {
-                    AuthenticationType = auth.AuthenticationType,
-                    Caption = auth.Caption
-                });
+            var model = new LoginViewModel();
+            ViewBag.ReturnUrl = returnUrl;
 
-            var model = new LoginViewModel
+            // Obtenha as provedoras externas configuradas
+            var externalLogins = new ExternalLoginListViewModel
             {
-                ExternalLogins = new ExternalLoginListViewModel
-                {
-                    ReturnUrl = Url.Action("Login"),
-                    Providers = AuthenticationManager.GetExternalAuthenticationTypes()
-                }
+                ReturnUrl = returnUrl,
+                Providers = HttpContext.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList()
             };
+
+            model.ExternalLogins = externalLogins;
 
             return View(model);
         }
@@ -576,6 +572,21 @@ namespace ReserveAqui.Controllers
                 Providers = HttpContext.GetOwinContext().Authentication.GetExternalAuthenticationTypes()
             };
             return View(model);
+        }
+
+        public class UserRoleService
+        {
+            private readonly UserManager<ApplicationUser> _userManager;
+
+            public UserRoleService(UserManager<ApplicationUser> userManager)
+            {
+                _userManager = userManager;
+            }
+
+            public async Task<bool> IsUserInRoleAsync(string userId, string role)
+            {
+                return await _userManager.IsInRoleAsync(userId, role);
+            }
         }
 
 

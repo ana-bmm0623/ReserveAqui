@@ -12,7 +12,7 @@
 
 <table class="table table-bordered">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.Reserva.UsuarioId)</th>
+        <th>@Html.DisplayNameFor(model => model.Reserva.ApplicationUserId)</th>
         <th>@Html.DisplayNameFor(model => model.ValorTotal)</th>
         <th>@Html.DisplayNameFor(model => model.DataPagamento)</th>
         <th>@Html.DisplayNameFor(model => model.MetodoPagamento)</th>
@@ -22,7 +22,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.Reserva.UsuarioId)</td>
+            <td>@Html.DisplayFor(modelItem => item.Reserva.ApplicationUserId)</td>
             <td>@Html.DisplayFor(modelItem => item.ValorTotal)</td>
             <td>@Html.DisplayFor(modelItem => item.DataPagamento)</td>
             <td>@Html.DisplayFor(modelItem => item.MetodoPagamento)</td>

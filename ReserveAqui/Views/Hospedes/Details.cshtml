@@ -1,4 +1,4 @@
-﻿@model ReserveAqui.Models.ReserveAqui.Models.Hospede
+﻿@model ReserveAqui.Models.Hospede
 
 @{
     ViewBag.Title = "Details";
@@ -13,7 +13,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.NomeCompleto)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.NomeCompleto)
         </dd>
@@ -21,7 +20,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.CPF)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.CPF)
         </dd>
@@ -29,7 +27,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.RG)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.RG)
         </dd>
@@ -37,7 +34,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
@@ -45,7 +41,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.Telefone)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Telefone)
         </dd>
@@ -53,14 +48,16 @@
         <dt>
             @Html.DisplayNameFor(model => model.Endereco)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Endereco)
         </dd>
-
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

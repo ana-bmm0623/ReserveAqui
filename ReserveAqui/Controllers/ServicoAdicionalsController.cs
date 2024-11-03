@@ -30,10 +30,15 @@ namespace ReserveAqui.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (servico.Valor <= 0)
+                {
+                    ModelState.AddModelError("Valor", "O valor do serviço deve ser positivo.");
+                    return View(servico);
+                }
                 db.ServicosAdicionais.Add(servico);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
+
             return View(servico);
         }
 

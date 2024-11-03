@@ -45,13 +45,15 @@ namespace ReserveAqui.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (imagemUrl != null && imagemUrl.ContentLength > 0)
+                if (!imagemUrl.ContentType.StartsWith("image"))
                 {
-                    var fileName = $"{hotel.Id}_{Path.GetFileName(imagemUrl.FileName)}";
-                    var path = Path.Combine(Server.MapPath("~/Images/Hotels"), fileName);
-                    imagemUrl.SaveAs(path);
-
-                    hotel.ImagemUrl = $"/Images/Hotels/{fileName}";
+                    ModelState.AddModelError("", "O arquivo deve ser uma imagem.");
+                    return View(hotel);
+                }
+                if (imagemUrl.ContentLength > 5 * 1024 * 1024) // Limite de 5MB
+                {
+                    ModelState.AddModelError("", "A imagem não pode exceder 5MB.");
+                    return View(hotel);
                 }
 
                 _db.Hoteis.Add(hotel);

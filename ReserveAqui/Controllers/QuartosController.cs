@@ -43,14 +43,22 @@ namespace ReserveAqui.Controllers
             {
                 if (ImagemUrl != null && ImagemUrl.ContentLength > 0)
                 {
-                    // Salva a imagem na pasta "Images/Quartos"
-                    var fileName = $"{quarto.Id}_{ImagemUrl.FileName}";
-                    var path = Path.Combine(Server.MapPath("~/Images/Quartos"), fileName);
-                    ImagemUrl.SaveAs(path);
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+                    var extension = Path.GetExtension(ImagemUrl.FileName).ToLower();
 
-                    // Define o caminho da imagem no modelo
-                    quarto.ImagemUrl = $"/Images/Quartos/{fileName}";
+                    if (allowedExtensions.Contains(extension) && ImagemUrl.ContentLength <= 2 * 1024 * 1024) // Limite de 2 MB
+                    {
+                        var fileName = $"{quarto.Id}_{ImagemUrl.FileName}";
+                        var path = Path.Combine(Server.MapPath("~/Images/Quartos"), fileName);
+                        ImagemUrl.SaveAs(path);
+                        quarto.ImagemUrl = $"/Images/Quartos/{fileName}";
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Por favor, envie uma imagem válida com menos de 2 MB.");
+                    }
                 }
+
 
                 db.Quartos.Add(quarto);
                 db.SaveChanges();
@@ -98,14 +106,21 @@ namespace ReserveAqui.Controllers
             {
                 if (ImagemUrl != null && ImagemUrl.ContentLength > 0)
                 {
-                    // Define o novo nome de arquivo baseado no ID do quarto
                     var fileName = $"{quarto.Id}_{ImagemUrl.FileName}";
                     var path = Path.Combine(Server.MapPath("~/Images/Quartos"), fileName);
-                    ImagemUrl.SaveAs(path);
 
-                    // Define o caminho da nova imagem no modelo
+                    // Remover a imagem antiga se existente
+                    if (!string.IsNullOrEmpty(quarto.ImagemUrl))
+                    {
+                        var oldPath = Server.MapPath(quarto.ImagemUrl);
+                        if (System.IO.File.Exists(oldPath))
+                            System.IO.File.Delete(oldPath);
+                    }
+
+                    ImagemUrl.SaveAs(path);
                     quarto.ImagemUrl = $"/Images/Quartos/{fileName}";
                 }
+
                 else
                 {
                     // Preserva o caminho da imagem anterior se nenhuma nova imagem foi enviada

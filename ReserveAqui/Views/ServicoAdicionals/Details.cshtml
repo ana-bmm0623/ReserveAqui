@@ -23,5 +23,6 @@
 
 <p>
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-primary" }) |
+    @Html.ActionLink("Excluir", "Delete", new { id = Model.Id }, new { @class = "btn btn-outline-danger" }) |
     @Html.ActionLink("Voltar à Lista", "Index", null, new { @class = "btn btn-link" })
 </p>

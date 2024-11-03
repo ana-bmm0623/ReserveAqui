@@ -3,7 +3,7 @@
 <h4>Use uma conta externa para fazer o logon.</h4>
 <hr />
 
-@if (Model.Providers != null && Model.Providers.Any())
+@if (Model?.Providers != null && Model.Providers.Any())
 {
     using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post))
     {
@@ -22,9 +22,7 @@ else
 {
     <div class="alert alert-warning">
         <p>
-            Não há serviços de autenticação externa configurados. Consulte
-            <a href="https://go.microsoft.com/fwlink/?LinkId=403804" target="_blank">este artigo</a>
-            para obter informações sobre configuração de autenticação externa.
+            Não há serviços de autenticação externa configurados.
         </p>
     </div>
 }

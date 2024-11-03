@@ -45,6 +45,11 @@ namespace ReserveAqui.Controllers
                     ModelState.AddModelError("CPF", "Hóspede com este CPF já existe.");
                     return View(hospede);
                 }
+                else if (db.Hospedes.Any(h => h.Email == hospede.Email && h.Id != hospede.Id))
+                {
+                    ModelState.AddModelError("Email", "Hóspede com este email já existe.");
+                    return View(hospede);
+                }
 
                 db.Hospedes.Add(hospede);
                 db.SaveChanges();
@@ -61,6 +66,11 @@ namespace ReserveAqui.Controllers
 
             Hospede hospede = db.Hospedes.Find(id);
             if (hospede == null) return HttpNotFound();
+            if (db.Hospedes.Any(h => h.Email == hospede.Email && h.Id != hospede.Id))
+            {
+                ModelState.AddModelError("Email", "Hóspede com este email já existe.");
+                return View(hospede);
+            }
 
             return View(hospede);
         }

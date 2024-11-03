@@ -37,9 +37,7 @@ namespace ReserveAqui.Models
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
-            // Observe que a authenticationType deve corresponder a uma definida em CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Adicionar declarações do usuário personalizadas aqui
             return userIdentity;
         }
     }
@@ -51,7 +49,6 @@ namespace ReserveAqui.Models
         {
         }
 
-        // Remover o DbSet<Usuario>
         public DbSet<Hospede> Hospedes { get; set; }
         public DbSet<Hotel> Hoteis { get; set; }
         public DbSet<Quarto> Quartos { get; set; }
@@ -62,7 +59,6 @@ namespace ReserveAqui.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // Configuração para ReservaServicoAdicional
             modelBuilder.Entity<ReservaServicoAdicional>()
                 .HasKey(rsa => new { rsa.ReservaId, rsa.ServicoAdicionalId });
 
@@ -88,11 +84,10 @@ namespace ReserveAqui.Models
                 .WithMany(sa => sa.ReservaServicosAdicionais)
                 .HasForeignKey(rsa => rsa.ServicoAdicionalId);
 
-            // Relacionamento ApplicationUser - Reserva (1:N)
             modelBuilder.Entity<Reserva>()
-                .HasRequired(r => r.ApplicationUser) // Reserva tem um ApplicationUser obrigatório
-                .WithMany(u => u.Reservas)   // ApplicationUser tem várias Reservas
-                .HasForeignKey(r => r.ApplicationUserId) // Chave estrangeira para ApplicationUser em Reserva
+                .HasRequired(r => r.ApplicationUser)
+                .WithMany(u => u.Reservas)
+                .HasForeignKey(r => r.ApplicationUserId)
                 .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);

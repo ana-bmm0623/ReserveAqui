@@ -130,6 +130,26 @@
             footer p {
                 margin: 0;
             }
+
+        /* Seção de Benefícios */
+        .benefits {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .benefit-item {
+            flex: 1 1 200px;
+            text-align: center;
+        }
+
+        @*@media (max-width: 768px) {
+            .benefits {
+                flex-direction: column;
+                align-items: center;
+            }
+        }*@
     </style>
 </head>
 <body>

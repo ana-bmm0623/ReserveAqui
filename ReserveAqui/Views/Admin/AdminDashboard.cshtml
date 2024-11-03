@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body text-center">
+            <a href="@Url.Action("ManageHotels", "Admin")" class="btn btn-outline-primary">
+                <i class="fa fa-hotel"></i> Gerenciar Hotéis
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-center">
+            <a href="@Url.Action("ManageRooms", "Admin")" class="btn btn-outline-primary">
+                <i class="fa fa-bed"></i> Gerenciar Quartos
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-center">
+            <a href="@Url.Action("ManageGuests", "Admin")" class="btn btn-outline-primary">
+                <i class="fa fa-user"></i> Gerenciar Hóspedes
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-center">
+            <a href="@Url.Action("ManageServices", "Admin")" class="btn btn-outline-primary">
+                <i class="fa fa-concierge-bell"></i> Gerenciar Serviços Adicionais
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-center">
+            <a href="@Url.Action("ManageReservations", "Admin")" class="btn btn-outline-primary">
+                <i class="fa fa-calendar-check"></i> Gerenciar Reservas
+            </a>
+        </div>
+    </div>
+</div>

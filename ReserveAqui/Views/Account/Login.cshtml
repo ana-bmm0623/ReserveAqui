@@ -4,6 +4,10 @@
     ViewBag.Title = "Logon";
 }
 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <main aria-labelledby="title">
     <h2 id="title">@ViewBag.Title</h2>
     <div class="row">
@@ -54,11 +58,10 @@
 
         <div class="col-md-4">
             <section id="socialLoginForm">
-                <!-- Passa o Model.ExternalLogins para a partial view -->
-                @{ Html.RenderPartial("_ExternalLoginsListPartial", Model.ExternalLogins); }
+                <h4>Ou faça login com uma conta externa:</h4>
+                @Html.Partial("_ExternalLoginsListPartial", Model.ExternalLogins)
             </section>
         </div>
-    </div>
 </main>
 
 @section Scripts {

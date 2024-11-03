@@ -57,9 +57,10 @@ namespace ReserveAqui.Models
         [Display(Name = "Lembrar-me?")]
         public bool RememberMe { get; set; }
 
-        // ExternalLoginListViewModel para login social
+        // Objeto que contém informações sobre logins externos
         public ExternalLoginListViewModel ExternalLogins { get; set; }
     }
+
     public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
