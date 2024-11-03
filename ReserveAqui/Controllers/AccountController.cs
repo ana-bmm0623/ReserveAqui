@@ -64,7 +64,8 @@ namespace ReserveAqui.Controllers
                 Providers = HttpContext.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList()
             };
 
-            model.ExternalLogins = externalLogins;
+            // Armazene o modelo de login externo no ViewBag
+            ViewBag.ExternalLogins = externalLogins;
 
             return View(model);
         }

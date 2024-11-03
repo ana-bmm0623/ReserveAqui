@@ -279,6 +279,10 @@
     <Compile Include="Migrations\202411032132281_Logig features.Designer.cs">
       <DependentUpon>202411032132281_Logig features.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411032202219_Login-Admin.cs" />
+    <Compile Include="Migrations\202411032202219_Login-Admin.Designer.cs">
+      <DependentUpon>202411032202219_Login-Admin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Hospede.cs" />
@@ -450,6 +454,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411032132281_Logig features.resx">
       <DependentUpon>202411032132281_Logig features.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411032202219_Login-Admin.resx">
+      <DependentUpon>202411032202219_Login-Admin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
