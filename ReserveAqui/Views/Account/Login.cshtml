@@ -59,7 +59,7 @@
         <div class="col-md-4">
             <section id="socialLoginForm">
                 <h4>Ou faça login com uma conta externa:</h4>
-                @Html.Partial("_ExternalLoginsListPartial", Model.ExternalLogins)
+                @Html.Partial("_ExternalLoginsListPartial", ViewBag.ExternalLogins as ReserveAqui.Models.ExternalLoginListViewModel)
             </section>
         </div>
     </div>

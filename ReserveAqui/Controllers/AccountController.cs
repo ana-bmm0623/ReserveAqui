@@ -54,22 +54,17 @@ namespace ReserveAqui.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            var model = new LoginViewModel();
             ViewBag.ReturnUrl = returnUrl;
 
-            // Obtenha as provedoras externas configuradas
             var externalLogins = new ExternalLoginListViewModel
             {
                 ReturnUrl = returnUrl,
-                Providers = HttpContext.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList()
+                Providers = HttpContext.GetOwinContext().Authentication.GetExternalAuthenticationTypes()
             };
 
-            // Armazene o modelo de login externo no ViewBag
             ViewBag.ExternalLogins = externalLogins;
-
-            return View(model);
+            return View(new LoginViewModel());
         }
-
 
         //
         // POST: /Account/Login
