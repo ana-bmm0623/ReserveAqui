@@ -37,9 +37,12 @@ namespace ReserveAqui.Controllers
                 return RedirectToAction("Index");
             }
 
+            // Populando ViewBags necessários para a view
             ViewBag.QuartoId = quartoId;
-            ViewBag.Hospedes = new SelectList(db.Hospedes, "Id", "NomeCompleto");
-            return View();
+            ViewBag.Quartos = db.Quartos.Select(q => new { q.Id, q.NumeroIdentificacao }).ToList();
+            ViewBag.Hospedes = db.Hospedes.Select(h => new { h.Id, h.NomeCompleto }).ToList();
+
+            return View(new Reserva { QuartoId = quartoId.Value });
         }
 
         [HttpPost]

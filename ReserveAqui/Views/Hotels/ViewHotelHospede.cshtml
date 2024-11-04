@@ -8,8 +8,15 @@
                 <div class="card border-0 shadow-sm">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <!-- Carrega a imagem com base no caminho correto -->
-                            <img src="@Url.Content(hotel.ImagemUrl)" class="card-img" alt="Imagem do Hotel">
+                            <!-- Verificar e carregar a imagem do hotel -->
+                            @if (hotel.ImagemUrl != null)
+                            {
+                                <img src="@Url.Content(hotel.ImagemUrl)" class="card-img" alt="Imagem do Hotel">
+                            }
+                            else
+                            {
+                                <div class="text-muted">Sem imagem disponível</div>
+                            }
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -17,6 +24,7 @@
                                 <p class="card-text text-muted">@hotel.Endereço</p>
                                 <p class="card-text">@hotel.Descricao</p>
 
+                                <!-- Verificar disponibilidade de quartos e exibir preço mínimo -->
                                 @if (hotel.Quartos != null && hotel.Quartos.Any(q => q.Disponibilidade))
                                 {
                                     var quartosDisponiveis = hotel.Quartos.Count(q => q.Disponibilidade);
@@ -24,9 +32,7 @@
 
                                     <div>
                                         <span class="badge badge-danger">Temos @quartosDisponiveis disponível(eis) a este preço</span>
-                                        <h5 class="text-danger mt-2">
-                                            R$ @precoMinimo:#,##0.00
-                                        </h5>
+                                        <h5 class="text-danger mt-2">R$ @string.Format("{0:0,0.00}", precoMinimo)</h5>
                                         <small class="text-muted">inclui impostos e taxas</small>
                                     </div>
                                 }
@@ -35,8 +41,8 @@
                                     <div class="text-muted">Indisponível no momento</div>
                                 }
 
+                                <!-- Botão de "Veja mais" para detalhes do hotel -->
                                 <div>
-                                    <!-- Botão de "Veja mais" para detalhes do hotel -->
                                     @Html.ActionLink("Veja mais", "MoreDetails", new { id = hotel.Id }, new { @class = "btn btn-primary" })
                                 </div>
                             </div>

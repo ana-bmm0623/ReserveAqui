@@ -234,6 +234,12 @@ namespace ReserveAqui.Controllers
             return View(room);
         }
 
+        public ActionResult ViewHotelHospede()
+        {
+            var hotels = db.Hoteis.Include(h => h.Quartos).ToList();
+            return View(hotels);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
