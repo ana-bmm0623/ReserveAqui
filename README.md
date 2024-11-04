@@ -42,4 +42,82 @@ O **ReserveAqui** é uma aplicação ASP.NET Framework para reserva de hotéis, 
 - **Visual Studio 2019** ou superior (ou qualquer IDE compatível com ASP.NET Framework)
 
 
+ ## Configuração e Execução
+
+### 1. Clonar o Repositório
+
+```bash
+git clone https://github.com/seu-usuario/ReserveAqui.git
+cd ReserveAqui
+```
+
+### 2. Configurar o Banco de Dados
+- No Visual Studio:
+
+- Abra o projeto ReserveAqui.sln.
+
+- No Package Manager Console, execute os seguintes comandos para criar o banco de dados e aplicar as migrações:
+
+```bash
+Copiar código
+Update-Database
+```
+
+### 3. Configurar o Envio de E-mails (Opcional)
+- Para habilitar o envio de e-mails de confirmação e redefinição de senha, configure o arquivo Web.config com as credenciais do SMTP. Exemplo:
+
+```xml
+<system.net>
+  <mailSettings>
+    <smtp from="seu-email@gmail.com">
+      <network host="smtp.gmail.com" port="587" userName="seu-email@gmail.com" password="sua-senha" enableSsl="true" />
+    </smtp>
+  </mailSettings>
+</system.net>
+```
+### 4. Executar o Projeto
+- No Visual Studio, selecione IIS Express para iniciar o servidor.
+O navegador abrirá automaticamente a aplicação em http://localhost:porta.
+
+### 5. Acessar a Aplicação
+- Usuário Comum
+-> Registre-se na aplicação para começar a fazer reservas.
+
+- Administrador
+-> Para acessar a área administrativa, um usuário deve ter a função Admin. Isso pode ser configurado manualmente no banco de dados ou através da implementação de um código de inicialização para adicionar a função Admin.
+
+- Estrutura de Pastas
+     * Controllers: Contém os controladores da aplicação, responsáveis por processar requisições e chamar as views.
+
+   * Models: Contém os modelos que representam as entidades do sistema.
+
+   * Views: Contém as views que são renderizadas para o usuário.
+  
+   * Content: Contém arquivos CSS e de estilo.
+     
+   * Scripts: Contém os scripts JavaScript e bibliotecas usadas na aplicação.
+
+
+## Contribuição
+Faça um fork deste repositório.
+
+Crie uma nova branch para suas alterações:
+
+```bash
+
+git checkout -b minha-nova-feature
+Commit suas alterações:
+```
+```bash
+
+git commit -m 'Adicionar nova feature'
+Envie para a branch:
+```
+``bash
+git push origin minha-nova-feature
+Abra um Pull Request.
+``
+## Licença
+- Este projeto é licenciado sob a Licença MIT - consulte o arquivo LICENSE para mais detalhes.
+
    
