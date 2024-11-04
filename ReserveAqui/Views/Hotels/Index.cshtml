@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Lista de Hotéis";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
 }
 
 <h2>Lista de Hotéis</h2>
@@ -40,6 +39,7 @@
                     <td>@hotel.Email</td>
                     <td>@hotel.Telefone</td>
                     <td>@hotel.Descricao</td>
+                    
                     <td>
                         @if (hotel.Quartos != null && hotel.Quartos.Any(q => q.Disponibilidade))
                         {
@@ -52,6 +52,7 @@
                             <span class="badge badge-secondary">Indisponível</span>
                         }
                     </td>
+                    
                     <td>
                         @if (hotel.Quartos != null && hotel.Quartos.Any(q => q.Disponibilidade))
                         {
@@ -64,6 +65,8 @@
                         }
                     </td>
                     <td>
+                        @Html.ActionLink("Adicionar Quarto", "AddRoom", new { hotelId = hotel.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Editar Quarto", "EditRoom", new { hotelId = hotel.Id }, new { @class = "btn btn-warning" })
                         @Html.ActionLink("Editar", "Edit", new { id = hotel.Id }, new { @class = "btn btn-outline-primary btn-sm" }) |
                         @Html.ActionLink("Detalhes", "Details", new { id = hotel.Id }, new { @class = "btn btn-outline-info btn-sm" }) |
                         @Html.ActionLink("Excluir", "Delete", new { id = hotel.Id }, new { @class = "btn btn-outline-danger btn-sm" })

@@ -1,0 +1,53 @@
+﻿@model ReserveAqui.Models.Quarto
+
+@{
+    ViewBag.Title = "Adicionar Quarto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Adicionar Quarto ao Hotel</h2>
+
+@using (Html.BeginForm("AddRoom", "Hotels", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.HotelId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NumeroIdentificacao, "Número de Identificação")
+        @Html.EditorFor(model => model.NumeroIdentificacao, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NumeroIdentificacao)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CapacidadeMaxima, "Capacidade Máxima")
+        @Html.EditorFor(model => model.CapacidadeMaxima, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CapacidadeMaxima)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Disponibilidade, "Disponibilidade")
+        @Html.CheckBoxFor(model => model.Disponibilidade)
+        @Html.ValidationMessageFor(model => model.Disponibilidade)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Preco, "Preço por Noite")
+        @Html.EditorFor(model => model.Preco, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Preco)
+    </div>
+
+    <div class="form-group">
+        <label for="ImagemUrl">Imagem do Quarto</label>
+        <input type="file" name="ImagemUrl" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Adicionar Quarto</button>
+}
+
+<div>
+    @Html.ActionLink("Voltar ao Detalhes do Hotel", "Details", new { id = ViewBag.HotelId }, new { @class = "btn btn-secondary" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

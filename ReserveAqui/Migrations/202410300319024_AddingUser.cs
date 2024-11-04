@@ -1,8 +1,7 @@
 ﻿namespace ReserveAqui.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class AddingUser : DbMigration
     {
         public override void Up()
@@ -10,27 +9,27 @@
             CreateTable(
                 "dbo.Usuarios",
                 c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        NomeCompleto = c.String(nullable: false),
-                        CPF = c.String(nullable: false, maxLength: 11),
-                        Endereco = c.String(),
-                        Telefone = c.String(),
-                        DataNascimento = c.DateTime(),
-                        Email = c.String(),
-                        EmailConfirmed = c.Boolean(nullable: false),
-                        PasswordHash = c.String(),
-                        SecurityStamp = c.String(),
-                        PhoneNumber = c.String(),
-                        PhoneNumberConfirmed = c.Boolean(nullable: false),
-                        TwoFactorEnabled = c.Boolean(nullable: false),
-                        LockoutEndDateUtc = c.DateTime(),
-                        LockoutEnabled = c.Boolean(nullable: false),
-                        AccessFailedCount = c.Int(nullable: false),
-                        UserName = c.String(),
-                    })
+                {
+                    Id = c.String(nullable: false, maxLength: 128),
+                    NomeCompleto = c.String(nullable: false),
+                    CPF = c.String(nullable: false, maxLength: 11),
+                    Endereco = c.String(),
+                    Telefone = c.String(),
+                    DataNascimento = c.DateTime(),
+                    Email = c.String(),
+                    EmailConfirmed = c.Boolean(nullable: false),
+                    PasswordHash = c.String(),
+                    SecurityStamp = c.String(),
+                    PhoneNumber = c.String(),
+                    PhoneNumberConfirmed = c.Boolean(nullable: false),
+                    TwoFactorEnabled = c.Boolean(nullable: false),
+                    LockoutEndDateUtc = c.DateTime(),
+                    LockoutEnabled = c.Boolean(nullable: false),
+                    AccessFailedCount = c.Int(nullable: false),
+                    UserName = c.String(),
+                })
                 .PrimaryKey(t => t.Id);
-            
+
             AddColumn("dbo.Reservas", "UsuarioId", c => c.String(nullable: false, maxLength: 128));
             AddColumn("dbo.AspNetUserRoles", "Usuario_Id", c => c.String(maxLength: 128));
             AddColumn("dbo.AspNetUserClaims", "Usuario_Id", c => c.String(maxLength: 128));
@@ -44,7 +43,7 @@
             AddForeignKey("dbo.AspNetUserRoles", "Usuario_Id", "dbo.Usuarios", "Id");
             AddForeignKey("dbo.Reservas", "UsuarioId", "dbo.Usuarios", "Id");
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.Reservas", "UsuarioId", "dbo.Usuarios");

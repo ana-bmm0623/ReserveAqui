@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ReserveAqui.Models.Quarto
+
+@{
+    ViewBag.Title = "Editar Quarto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Editar Quarto</h2>
+
+@using (Html.BeginForm("Edit", "Rooms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-horizontal">
+        <h4>Dados do Quarto</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumeroIdentificacao, "Número de Identificação", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumeroIdentificacao, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 101" } })
+                @Html.ValidationMessageFor(model => model.NumeroIdentificacao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CapacidadeMaxima, "Capacidade Máxima", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CapacidadeMaxima, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 4 pessoas" } })
+                @Html.ValidationMessageFor(model => model.CapacidadeMaxima, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Preco, "Preço por Noite", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Preco, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 150.00" } })
+                @Html.ValidationMessageFor(model => model.Preco, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Disponibilidade, "Disponível", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Disponibilidade)
+                    @Html.ValidationMessageFor(model => model.Disponibilidade, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="ImagemUrl">Imagem do Quarto</label>
+            <input type="file" name="ImagemUrl" class="form-control" />
+            @if (!string.IsNullOrEmpty(Model.ImagemUrl))
+            {
+                <img src="@Model.ImagemUrl" alt="Imagem do Quarto" style="width: 100px; height: auto; margin-top: 10px;" />
+            }
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HotelId, "Hotel", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("HotelId", ViewBag.HotelId as SelectList, "Selecione o Hotel", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.HotelId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group text-right">
+            <input type="submit" value="Salvar Alterações" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar para a Lista", "Index", "Hotels", null, new { @class = "btn btn-secondary" })
+</div>
+

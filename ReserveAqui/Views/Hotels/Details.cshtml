@@ -2,29 +2,37 @@
 
 @{
     ViewBag.Title = "Detalhes do Hotel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Nome</h2>
+<h2>Detalhes do Hotel</h2>
 
-<div>
-    <h4>Informações do Hotel</h4>
+<div class="form-horizontal">
+    <h4>@Model.Nome</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>Endereço</dt>
-        <dd>@Model.Endereço</dd>
+    <dl class="row">
+        <dt class="col-sm-3">Imagem</dt>
+        <dd class="col-sm-9">
+            <img src="@Model.ImagemUrl" alt="Imagem do Hotel" style="width: 100px; height: auto;">
+        </dd>
 
-        <dt>Email de Contato</dt>
-        <dd>@Model.Email</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Endereço)</dt>
+        <dd class="col-sm-9">@Model.Endereço</dd>
 
-        <dt>Telefone</dt>
-        <dd>@Model.Telefone</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Email)</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
 
-        <dt>Descrição</dt>
-        <dd>@Model.Descricao</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Telefone)</dt>
+        <dd class="col-sm-9">@Model.Telefone</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Descricao)</dt>
+        <dd class="col-sm-9">@Model.Descricao</dd>
     </dl>
 </div>
 
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
-    @Html.ActionLink("Voltar para Lista", "Index", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Editar Hotel", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Voltar para Lista", "Index", null, new { @class = "btn btn-secondary" }) |
+    @Html.ActionLink("Adicionar Quarto", "AddRoom", new { hotelId = Model.Id }, new { @class = "btn btn-success" }) |
+    @Html.ActionLink("Editar Quarto", "EditRoom", new { hotelId = Model.Id }, new { @class = "btn btn-warning" })
 </p>

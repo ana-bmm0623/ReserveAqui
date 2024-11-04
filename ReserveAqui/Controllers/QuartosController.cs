@@ -178,6 +178,23 @@ namespace ReserveAqui.Controllers
             return View(quarto);
 
         }
+
+        public ActionResult ListQuartos()
+        {
+            var quartos = db.Quartos.ToList(); // Recupera todos os quartos do banco de dados
+            return View(quartos); // Passa a lista de quartos para a View
+        }
+
+        public ActionResult DetailsQuarto(int id)
+        {
+            var quarto = db.Quartos.Find(id); // Recupera o quarto com o ID fornecido
+            if (quarto == null)
+            {
+                return HttpNotFound();
+            }
+            return View(quarto); // Passa um único quarto para a View
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

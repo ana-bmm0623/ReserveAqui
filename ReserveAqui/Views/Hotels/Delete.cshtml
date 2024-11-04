@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Excluir Hotel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Excluir Hotel</h2>
@@ -30,9 +31,10 @@
         <dd>@Html.DisplayFor(model => model.Descricao)</dd>
     </dl>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Delete", "Hotels", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
         <button type="submit" class="btn btn-danger">Excluir</button>
         @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
     }
