@@ -18,7 +18,6 @@
         <div class="form-group">
             @Html.LabelFor(model => model.QuartoId, "Quarto", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <!-- Verificação para evitar null e carregamento do SelectList do Quarto -->
                 @Html.DropDownList("QuartoId",
                     ViewBag.QuartoId != null
                     ? new SelectList(ViewBag.Quartos, "Id", "NumeroIdentificacao", Model.QuartoId)
@@ -26,20 +25,6 @@
                     "Selecione o quarto",
                     new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.QuartoId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HospedeId, "Hóspede", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <!-- Verificação para evitar null e carregamento do SelectList do Hóspede -->
-                @Html.DropDownList("HospedeId",
-                    ViewBag.Hospedes != null
-                    ? new SelectList(ViewBag.Hospedes, "Id", "NomeCompleto", Model.HospedeId)
-                    : new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "NomeCompleto"),
-                    "Selecione o hóspede",
-                    new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.HospedeId, "", new { @class = "text-danger" })
             </div>
         </div>
 
