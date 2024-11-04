@@ -12,17 +12,25 @@ namespace ReserveAqui.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int quartoId)
         {
+            ViewBag.QuartoId = quartoId;
             var reservas = db.Reservas.Include(r => r.Quarto).Include(r => r.Hospede).ToList();
             return View(reservas);
         }
 
+
         [HttpGet]
         [Authorize]
-        public ActionResult Create(int quartoId)
+        public ActionResult Create(int? quartoId)
         {
-            var quarto = db.Quartos.Find(quartoId);
+            if (!quartoId.HasValue)
+            {
+                TempData["ErrorMessage"] = "ID do quarto não fornecido.";
+                return RedirectToAction("Index");
+            }
+
+            var quarto = db.Quartos.Find(quartoId.Value);
             if (quarto == null || !quarto.Disponibilidade)
             {
                 TempData["ErrorMessage"] = "Quarto não encontrado ou não disponível para reserva.";

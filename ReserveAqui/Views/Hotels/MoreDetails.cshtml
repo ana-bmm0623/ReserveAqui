@@ -1,0 +1,62 @@
+﻿@model ReserveAqui.Models.Hotel
+
+@{
+    ViewBag.Title = "Detalhes do Hotel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalhes do Hotel - @Model.Nome</h2>
+
+<div class="form-horizontal">
+    <h4>@Model.Nome</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Imagem</dt>
+        <dd class="col-sm-9">
+            <img src="@Url.Content(Model.ImagemUrl)" alt="Imagem do Hotel" style="width: 300px; height: auto;">
+        </dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Endereço)</dt>
+        <dd class="col-sm-9">@Model.Endereço</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Email)</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Telefone)</dt>
+        <dd class="col-sm-9">@Model.Telefone</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Descricao)</dt>
+        <dd class="col-sm-9">@Model.Descricao</dd>
+    </dl>
+
+    <h4>Quartos Disponíveis</h4>
+    <div class="row">
+        @if (Model.Quartos != null && Model.Quartos.Any(q => q.Disponibilidade))
+        {
+            foreach (var quarto in Model.Quartos.Where(q => q.Disponibilidade))
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="@Url.Content(quarto.ImagemUrl)" class="card-img-top" alt="Imagem do Quarto">
+                        <div class="card-body">
+                            <h5 class="card-title">Quarto @quarto.NumeroIdentificacao</h5>
+                            <p class="card-text">Capacidade: @quarto.CapacidadeMaxima pessoas</p>
+                            <p class="card-text">Preço por Noite: R$ @quarto.Preco:#,##0.00</p>
+                            @Html.ActionLink("Reservar", "Create", "Reservas", new { quartoId = quarto.Id }, new { @class = "btn btn-success" })
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-12">
+                <p class="text-muted">Nenhum quarto disponível no momento.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Voltar para Lista", "Index", null, new { @class = "btn btn-secondary" })
+</p>

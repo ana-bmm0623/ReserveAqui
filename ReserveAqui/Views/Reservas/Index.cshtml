@@ -7,42 +7,44 @@
 <h2>Reservas</h2>
 
 <p>
-    @Html.ActionLink("Nova Reserva", "Create", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Reservar Quarto", "Create", "Reservas", new { quartoId = ViewBag.QuartoId }, new { @class = "btn btn-primary" })
 </p>
-    <table class="table table-bordered">
-        <thead>
+
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().Hospede.NomeCompleto)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Quarto.NumeroIdentificacao)</th>
+            <th>@Html.DisplayNameFor(model => model.First().ApplicationUser.NomeCompleto)</th>
+            <th>@Html.DisplayNameFor(model => model.First().QuantidadePessoas)</th>
+            <th>@Html.DisplayNameFor(model => model.First().DataEntrada)</th>
+            <th>@Html.DisplayNameFor(model => model.First().DataSaida)</th>
+            <th>@Html.DisplayNameFor(model => model.First().CheckInRealizado)</th>
+            <th>@Html.DisplayNameFor(model => model.First().CheckOutRealizado)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Cancelada)</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>@Html.DisplayNameFor(model => model.First().Hospede.NomeCompleto)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Quarto.NumeroIdentificacao)</th>
-                <th>@Html.DisplayNameFor(model => model.First().ApplicationUser.NomeCompleto)</th>
-                <th>@Html.DisplayNameFor(model => model.First().QuantidadePessoas)</th>
-                <th>@Html.DisplayNameFor(model => model.First().DataEntrada)</th>
-                <th>@Html.DisplayNameFor(model => model.First().DataSaida)</th>
-                <th>@Html.DisplayNameFor(model => model.First().CheckInRealizado)</th>
-                <th>@Html.DisplayNameFor(model => model.First().CheckOutRealizado)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Cancelada)</th>
-                <th>Ações</th>
+                <td>@Html.DisplayFor(modelItem => item.Hospede.NomeCompleto)</td>
+                <td>@Html.DisplayFor(modelItem => item.Quarto.NumeroIdentificacao)</td>
+                <td>@Html.DisplayFor(modelItem => item.ApplicationUser.NomeCompleto)</td>
+                <td>@Html.DisplayFor(modelItem => item.QuantidadePessoas)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataEntrada)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataSaida)</td>
+                <td>@Html.DisplayFor(modelItem => item.CheckInRealizado)</td>
+                <td>@Html.DisplayFor(modelItem => item.CheckOutRealizado)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cancelada)</td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" }) |
+                    @Html.ActionLink("Detalhes", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" }) |
+                    @Html.ActionLink("Excluir", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Hospede.NomeCompleto)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Quarto.NumeroIdentificacao)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ApplicationUser.NomeCompleto)</td>
-                    <td>@Html.DisplayFor(modelItem => item.QuantidadePessoas)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DataEntrada)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DataSaida)</td>
-                    <td>@Html.DisplayFor(modelItem => item.CheckInRealizado)</td>
-                    <td>@Html.DisplayFor(modelItem => item.CheckOutRealizado)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Cancelada)</td>
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" }) |
-                        @Html.ActionLink("Detalhes", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" }) |
-                        @Html.ActionLink("Excluir", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>

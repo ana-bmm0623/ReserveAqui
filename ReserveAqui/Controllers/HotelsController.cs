@@ -1,5 +1,6 @@
 ﻿using ReserveAqui.Models;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -9,12 +10,12 @@ namespace ReserveAqui.Controllers
 {
     public class HotelsController : Controller
     {
-        private readonly ApplicationDbContext _db = new ApplicationDbContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Hotels
         public ActionResult Index()
         {
-            var hotels = _db.Hoteis.Include(h => h.Quartos).ToList();
+            var hotels = db.Hoteis.Include(h => h.Quartos).ToList();
             return View(hotels);
         }
 
@@ -24,7 +25,20 @@ namespace ReserveAqui.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var hotel = _db.Hoteis.Include(h => h.Quartos).FirstOrDefault(h => h.Id == id);
+            var hotel = db.Hoteis.Include(h => h.Quartos).FirstOrDefault(h => h.Id == id);
+            if (hotel == null)
+                return HttpNotFound();
+
+            return View(hotel);
+        }
+
+        // GET: Hotels/Details/5
+        public ActionResult MoreDetails(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var hotel = db.Hoteis.Include(h => h.Quartos).FirstOrDefault(h => h.Id == id);
             if (hotel == null)
                 return HttpNotFound();
 
@@ -49,12 +63,21 @@ namespace ReserveAqui.Controllers
                 if (imagemUrl != null && imagemUrl.ContentType.StartsWith("image") && imagemUrl.ContentLength <= 5 * 1024 * 1024)
                 {
                     var imagePath = "/Content/Images/" + imagemUrl.FileName;
-                    imagemUrl.SaveAs(Server.MapPath(imagePath));
+                    var serverPath = Server.MapPath(imagePath);
+
+                    // Verificar se o diretório existe e, caso não, criar o diretório
+                    var directory = Path.GetDirectoryName(serverPath);
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    imagemUrl.SaveAs(serverPath);
                     hotel.ImagemUrl = imagePath;
                 }
 
-                _db.Hoteis.Add(hotel);
-                _db.SaveChanges();
+                db.Hoteis.Add(hotel);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -68,7 +91,7 @@ namespace ReserveAqui.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var hotel = _db.Hoteis.Find(id);
+            var hotel = db.Hoteis.Find(id);
             if (hotel == null)
                 return HttpNotFound();
 
@@ -86,12 +109,26 @@ namespace ReserveAqui.Controllers
                 if (imagemUrl != null && imagemUrl.ContentType.StartsWith("image") && imagemUrl.ContentLength <= 5 * 1024 * 1024)
                 {
                     var imagePath = "/Content/Images/" + imagemUrl.FileName;
-                    imagemUrl.SaveAs(Server.MapPath(imagePath));
+                    var serverPath = Server.MapPath(imagePath);
+
+                    // Excluir a imagem antiga se ela existir
+                    var oldHotel = db.Hoteis.AsNoTracking().FirstOrDefault(h => h.Id == hotel.Id);
+                    if (oldHotel != null && !string.IsNullOrEmpty(oldHotel.ImagemUrl))
+                    {
+                        var oldImagePath = Server.MapPath(oldHotel.ImagemUrl);
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    // Salvar a nova imagem
+                    imagemUrl.SaveAs(serverPath);
                     hotel.ImagemUrl = imagePath;
                 }
 
-                _db.Entry(hotel).State = EntityState.Modified;
-                _db.SaveChanges();
+                db.Entry(hotel).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -105,7 +142,7 @@ namespace ReserveAqui.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var hotel = _db.Hoteis.Find(id);
+            var hotel = db.Hoteis.Find(id);
             if (hotel == null)
                 return HttpNotFound();
 
@@ -118,20 +155,31 @@ namespace ReserveAqui.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var hotel = _db.Hoteis.Find(id);
+            var hotel = db.Hoteis.Find(id);
             if (hotel != null)
             {
-                _db.Hoteis.Remove(hotel);
-                _db.SaveChanges();
+                // Remover a imagem do hotel se existir
+                if (!string.IsNullOrEmpty(hotel.ImagemUrl))
+                {
+                    var imagePath = Server.MapPath(hotel.ImagemUrl);
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                }
+
+                db.Hoteis.Remove(hotel);
+                db.SaveChanges();
             }
             return RedirectToAction("Index");
         }
+
         // GET: Hotels/AddRoom/1
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult AddRoom(int hotelId)
         {
-            var hotel = _db.Hoteis.Find(hotelId);
+            var hotel = db.Hoteis.Find(hotelId);
             if (hotel == null) return HttpNotFound();
 
             ViewBag.HotelId = hotelId;
@@ -146,8 +194,8 @@ namespace ReserveAqui.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Quartos.Add(room);
-                _db.SaveChanges();
+                db.Quartos.Add(room);
+                db.SaveChanges();
                 return RedirectToAction("Details", new { id = room.HotelId });
             }
 
@@ -156,18 +204,22 @@ namespace ReserveAqui.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult EditRoom(int id) // Recebe o ID do quarto específico
+        public ActionResult EditRoom(int? id)
         {
-            var room = _db.Quartos.Find(id); // Busca o quarto pelo ID
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var room = db.Quartos.Find(id);
             if (room == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.HotelId = new SelectList(_db.Hoteis, "Id", "Nome", room.HotelId);
-            return View(room); // Passa o quarto específico para a View
+            ViewBag.HotelId = new SelectList(db.Hoteis, "Id", "Nome", room.HotelId);
+            return View(room);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -175,8 +227,8 @@ namespace ReserveAqui.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(room).State = EntityState.Modified;
-                _db.SaveChanges();
+                db.Entry(room).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Details", new { id = room.HotelId });
             }
             return View(room);
@@ -186,7 +238,7 @@ namespace ReserveAqui.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }

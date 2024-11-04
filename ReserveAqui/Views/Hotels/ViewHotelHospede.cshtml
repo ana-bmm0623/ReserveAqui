@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ReserveAqui.Models.Hotel>
+
+<div class="container">
+    <div class="row">
+        @foreach (var hotel in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <!-- Carrega a imagem com base no caminho correto -->
+                            <img src="@Url.Content(hotel.ImagemUrl)" class="card-img" alt="Imagem do Hotel">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@hotel.Nome</h5>
+                                <p class="card-text text-muted">@hotel.Endereço</p>
+                                <p class="card-text">@hotel.Descricao</p>
+
+                                @if (hotel.Quartos != null && hotel.Quartos.Any(q => q.Disponibilidade))
+                                {
+                                    var quartosDisponiveis = hotel.Quartos.Count(q => q.Disponibilidade);
+                                    var precoMinimo = hotel.Quartos.Where(q => q.Disponibilidade).Min(q => q.Preco);
+
+                                    <div>
+                                        <span class="badge badge-danger">Temos @quartosDisponiveis disponível(eis) a este preço</span>
+                                        <h5 class="text-danger mt-2">
+                                            R$ @precoMinimo:#,##0.00
+                                        </h5>
+                                        <small class="text-muted">inclui impostos e taxas</small>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-muted">Indisponível no momento</div>
+                                }
+
+                                <div>
+                                    <!-- Botão de "Veja mais" para detalhes do hotel -->
+                                    @Html.ActionLink("Veja mais", "MoreDetails", new { id = hotel.Id }, new { @class = "btn btn-primary" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

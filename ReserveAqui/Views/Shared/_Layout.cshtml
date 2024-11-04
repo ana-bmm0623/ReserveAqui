@@ -19,7 +19,7 @@
         <div class="navbar-right">
             @if (User.Identity.IsAuthenticated)
             {
-                <span class="user-info">@User.Identity.Name)</span>
+                <span class="user-info">Olá, @User.Identity.Name!</span>
                 <a href="@Url.Action("Index", "Hotels")" class="btn btn-primary">Hotéis</a>
 
                 if (User.IsInRole("Admin"))
